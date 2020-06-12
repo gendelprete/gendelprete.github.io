@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/np-hard-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+            <div id="title">
+                <h1>"Drive the TAs Home" - NP Hard Approximation Algorithm<br>UC Berkeley - Fall 2019</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/highway.jpg"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">For my algorithms class, I worked with two classmates, <a class="special-link" href="https://www.linkedin.com/in/sdjajadi/">Stephanie Djajadi</a> and <a class="special-link" href="https://www.linkedin.com/in/nnpok/">Nolan Pokpongkiat</a>, to develop an approximation algorithm for the <a class="special-link" href="https://en.wikipedia.org/wiki/Travelling_salesman_problem#Metric">Metric Traveling Salesman problem</a> that also takes into account solution cost. The Traveling Salesman problem (TSP) is a graph theory problem that asks the question, "Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city and returns to the origin city?" (<a class="special-link" href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Wikipedia</a>). The premise of our project was to develop an algorithm that given a graph with different locations and houses, it would find the most efficient "driving path" through the graph for our professor to drop off the class's teaching assistants (TAs) at or near their houses with the least cost of "energy." Energy was defined as the sum of the "driving" and "walking" distances our professor and TAs would have to do to get everyone home. My team decided to use <a class="special-link" href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering</a>, <a class="special-link" href="https://www.geeksforgeeks.org/steiner-tree/">Steiner Tree approximation</a>, and <a class="special-link" href="https://en.wikipedia.org/wiki/Depth-first_search">depth first search</a> to build our approximation algorithm in Python and NetworkX.</p>
+            <h2>The Code</h2>
+            <p class="body-text">I pair programmed with Stephanie and we built a special version of k-means clustering with a unique cost function that used graph edge distances instead of traditional Euclidean distance. We used k-means clustering to cluster the houses in a given graph into "neighborhoods" where we could drop off any TAs that lived in that neighborhood at a central drop off location, the mean location of the cluster, to lessen driving cost. Nolan worked on the Steiner Tree approximation algorithm, which took all of the mean locations of each neighborhood and found the minimum spanning tree that connected all of the drop off locations with the least amount of distance connecting all of them. Stephanie and I then implemented depth first search in order to find a traversal of the Steiner tree to construct the driving path.</p>
+            <h2>Example</h2>
+            <div class="other-div"><img class="other-img" src="assets/img/np-hard-inp.png"></div>
+            <p class="body-text">Above is an input file for our approximation algorithm. This file holds the information for a graph with 41 nodes that represent locations. The names of the locations are on the third line, which for this graph are places in and around the UC Berkeley campus. 18 out of the 41 locations are homes where TAs live, and these homes are listed on line 4. Line 5 shows that Soda Hall (the computer science building) is the starting point of the drive. The rest of the file lists the edges, like street connections, between different locations. The first like shows that the first location, AlumniHouse, has an edge of length 1 to BanwayBldg, an edge of length 1 to BarrowLane, etc. The places with x's mean there are no connections to those locations. Our solver will read in this input file and build a graph object in NetworkX in order for us to manipulate the graph and run the rest of our algorithm.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/np-hard-output.png"></div>
+            <p class="body-text">After running our algorithm, we received back the above output file that contains our driving path. The first line of the file shows the path of locations our professor's car will drive along which is the output of the depth first search traversal on our Steiner tree approximation. The next line indicates that there are 12 locations where TAs will be dropped off, which we determined through k-means clustering. The next lines have the drop off location listed first, and then the houses of the TAs who were dropped off there are listed after. Using this output file, we can calculate our total cost of the drive by summing up how far our professor had to drive and how far the TAs had to walk to their homes if they weren't dropped off directly at their house.</p>
+            <h2>Setbacks</h2>
+            <p class="body-text">Our algorithm's runtime was much slower than we anticipated. We had to make some last minute decisions to run simpler, but less accurate versions of our algorithm to try to lower the costs of our solutions in the last couple of hours before the deadline. Lesson learned-no matter how correct or novel you think your solution is, it won't matter if it isn't efficient! In hindsight, we should have limited the number of times we ran k-means for a given input to only a few values of k to speed up the runtime!</p>
+            <h2>Languages and Tools Used</h2>
+            <div id="lang-tools-div">
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/python-logo-generic.svg"></div>
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/networkx_logo.svg"></div>
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/aws_logo_smile_1200x630.png"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png"></div>
+            </div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="np-hard.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/about-script.js"></script>
+        </body>
+    </html>

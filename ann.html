@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/ann-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+            <div id="title">
+                <h1>Number Classification ANN<br>UC Berkeley - Fall 2019</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/numbers.jpg"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">For my computer architecture class, I built an <a class="special-link" href="https://en.wikipedia.org/wiki/Artificial_neural_networkArtificial" target="_blocked">Artificial Neural Network (ANN)</a> in the RISC-V assembly language that classifies handwritten digits to their actual number using the <a class="special-link" href="http://yann.lecun.com/exdb/mnist/" target="_blocked">MNIST data set</a>. The ANN utilizes matrix and vector operations and two nonlinear functions to classify handwritten number samples to their actual corresponding number. The network is pictured below:</p>
+            <div class="other-div"><img class="other-img" src="assets/img/MNIST.png"></div>
+            <p class="body-text">The image of the number 8 on the right is a handwritten sample that is flattened into an array (like a list) of 784 pixels.  The image input then goes through the network which consists of multiple matrix and vector multiplications, two training matrices <i>m<sub>0</sub></i> and <i>m<sub>1</sub></i> that manipulate the pixels of the image, and two non-linear functions ReLU and Argmax. ReLU turns negative numbers into zero while leaving positive numbers as is, and Argmax returns the index of the array with the greatest value. The Argmax function returns the network's classification of the image's true value.</p>
+            <h2>The Code</h2>
+            <p class="body-text">I used the <a class="special-link" href="https://riscv.org/RISC-V" target="_blocked">RISC-V assembly language</a>, which is a low level language that consists only of basic functions, like logical operators, math functions, bit-wise operations, and memory storage functionalities, and has only 32 memory registers for storing program information like variables and return addresses. I implemented general matrix and vector multiplication functions, the ReLU and Argmax non-linear functions, and reading and writing matrix functionalities. The main program put all of these functions together and consisted of 4 main parts: loading matrices, running mathematical layers, writing output, and calculating the classification/label. With very few places to store data due to RISC-V's limited storage registers, I had challenges with running out of storage space and overwriting my variables when trying to execute multiple functions at once. The key to the project was storing register values strategically in my program's memory before running new functions so that no variables would be lost. While the math of the ANN wasn't necessarily complex, the difficulty of the project came from working with limited built functions and very limited storage space. Completing this project made me realize I take the ease of Python's syntax and memory safety for granted!</p>
+            <h2>Example</h2>
+            <div class="other-div"><img class="other-img" src="assets/img/ann_input.png"></div>
+            <p class="body-text">Above is an Ascii representation of the handwritten number image we will be classifying. Just from looking at the image, it should be classified as the number six! This image will be flattened into a 784 x 1 array of numbers and then sent through the ANN.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/m0.png"></div>
+            <div class="other-div"><img class="other-img" src="assets/img/m1.png"></div>
+            <p class="body-text">Above are the two training matrices, <i>m<sub>0</sub></i> and <i>m<sub>1</sub></i>. <i>m<sub>0</sub></i> is a 128 x 784 matrix, and <i>m<sub>1</sub></i> is 10 x 128 matrix. The flattened input image is multiplied by these matrices before going through the nonlinear functions ReLU and Argmax in order to reach a classification. The training matrices are created by tuning the network using training images, so that the parameters of the network will have the most accurate correct classification rate when the network sees new images.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/ann_output.png"></div>
+            <p class="body-text">After running the main program, the network did all of the math and manipulations behind the scenes and classified the image correctly as the number six!
+            <h2>Languages Used</h2>
+            <div id="lang-tools-div">
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/risc-v.png"></div>
+            </div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="ann.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/about-script.js"></script>
+        </body>
+    </html>

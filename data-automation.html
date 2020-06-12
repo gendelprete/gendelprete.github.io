@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/data-automation-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+            <div id="title">
+                <h1>Data Report Automation<br>Lyft - Summer 2019</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/lyft-tile.svg"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">The Regulatory Reporting team is in charge of building and sending off many data reports of varying sizes and degrees of intricacy. Some of the smaller, more monotonous reports need to frequently be sent out to regulators, but the process of gathering data, formatting, and sending such reports is the same every time. My task was to create a template that my team could use to turn their manual processes for smaller reports into fully automated processes to gain back work time.  This was an individual project that I worked on from July to August 2019. I received help from a Lyft software engineer, Sam Reese, and I worked cross functionally with other engineers and an external secure digital storage company for various clearances and API needs, respectively.</p>
+            <h2>The Code</h2>
+            <p class="body-text">I designed a Python program that contains all 3 parts of the report process:</p><br><p class="body-text tab">1. Pull raw data from Lyft’s data tables using Hive.</p><br><p class="body-text tab">2. Validate and format the data in Pandas.</p><br><p class="body-text tab">3. Send the data report using Python and the secure digital storage company’s API to the report's storage location for regulators.</p><br><p class="body-text">In order to actually automate the whole process, I used Apache Airflow and a directed acyclic graph (DAG) in Python to build the steps of the workflow and schedule recurring runs of the Python program. I went through the design process for one report, and then built a general template and wrote documentation in order for my team to continue my work and automate more reports in the future.</p>
+            <h2>Languages and Tools Used</h2>
+            <div id="lang-tools-div">
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/python-logo-generic.svg"></div>
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/pandas.svg"></div>
+                <div id="hive-img"><img class="other-img" src="assets/img/1200px-Apache_Hive_logo.svg.png"></div>
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/AirflowLogo.png"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png"></div>
+            </div>
+            <div class="space"><p class="body-text"><strong>To learn more about my design, please reach out to me at <a class="special-link" href="mailto:gendelprete@gmail.com" target="_blocked">gendelprete@gmail.com</a>!</strong></p></div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="data-automation.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/about-script.js"></script>
+        </body>
+    </html>

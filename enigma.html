@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/enigma-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+            <div id="title">
+                <h1>The Enigma<br>UC Berkeley - Fall 2018</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/enigma.jpg"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">I implemented a program that simulates the German Enigma encryption and decryption machine from WWII in Java. The program includes functions that represent the functionality of the physical pieces of the machine like the rotors, reflectors, pawls, and the plugboard. The program can take in configurations and a message or cipher text and encrypt or decrypt the text using the same progressive substitution cipher technique as the actual Enigma machines. To read more how the machine worked, click <a class="special-link" href="https://en.wikipedia.org/wiki/Enigma_machine" target="_blocked">here</a>.</p>
+            <h2>The Code</h2>
+            <p class="body-text">I implemented different classes to represent the pieces of the machine like different kinds of rotors and reflectors, and also needed functionalities like permutations and character ranges. All of these classes were put together in a “machine” class that simulated the entire Enigma process by scanning input files, running the setup and encryption/decryption process, and building an output file.</p>
+            <h2>Example</h2>
+            <div class="other-div"><img class="other-img" src="assets/img/enigma-conf.png"></div>
+            <p class="body-text">In this example, my Enigma program is configured with the above file. The program takes in uppercase letter A-Z, and has 11 rotors and 8 pawls. The next lines have the name of a rotor (I to VIII, Beta, Gamma, and reflectors B and C), a denotation for rotor type (non-moving, moving, or a reflector) and its notches, and the cyclical permutations in parentheses.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/enigma-inp.png"></div>
+            <p class="body-text">The input file shown above has a line of settings, and then the message to be encrypted. I made my message a homage to <a class="special-link" href="https://en.wikipedia.org/wiki/Alan_Turing" target="_blocked">Alan Turing</a>, a British mathematician who played a big part in cracking the Enigma machines during WWII, and Benedict Cumberbatch who played Turing in the movie <a class="special-link" href="https://www.imdb.com/title/tt2084970/" target="_blocked">The Imitation Game</a>. The second message to be decrypted is the encryption of the same message above, to check for correctness.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/enigma-out.png"></div>
+            <p class="body-text">The output of running the messages through the Enigma program is shown above, and the encryption and decryption of the messages wit hthe given settings come out correct. The Enigma has been cracked!</p>
+            <h2>Languages and Tools Used</h2>
+            <div id="lang-tools-div">
+                <div class="lang-tools-img"><img class="other-img" src="assets/img/Java_programming_language_logo.svg"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png"></div>
+            </div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="enigma.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/about-script.js"></script>
+        </body>
+    </html>
