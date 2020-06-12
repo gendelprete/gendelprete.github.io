@@ -198,7 +198,7 @@ footer {
   }
 
   #three-bars {
-    font-size: 22px;
+    font-size: 26px;
   }
 }
 
@@ -267,7 +267,7 @@ h2 {
 
 /* Mobile Picture Boxes */
 .work-box {
-  height: 33vh;
+  height: 31vh;
   width: 100%;
   position: relative;
   overflow: hidden;
