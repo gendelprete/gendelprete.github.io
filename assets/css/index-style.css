@@ -281,7 +281,7 @@ h2 {
 /* Long Screen Mobile Phone Picture Boxes */
 @media screen and (min-height: 750px) and (max-height: 850px){
   .work-box {
-    height: 28vh;
+    height: 26vh;
     width: 100%;
     overflow: hidden;
     margin-bottom: 10px;
