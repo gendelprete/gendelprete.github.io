@@ -5,13 +5,13 @@
         <title>Genevieve Del Prete</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="assets/css/graphs-style.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/proj-style.css">
         <link rel="icon" href="assets/img/bitmoji.png">
     </head>
     <body>
         <div id="all-content">
             <div id="header">
-                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG"></a></div>
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG" alt="gdp logo"></a></div>
 
                 <div id="nav-bar">
                     <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
@@ -31,37 +31,37 @@
                 <h1>Graph Package with GNU Make and GPS Clients<br>UC Berkeley - Fall 2018</h1>
             </div>
 
-            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/gps.jpg"></div>
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/gps.jpg" alt="person holding phone with google maps open"></div>
 
             <h2>Overview</h2>
-            <p class="body-text">For my data structures class, I implemented a library package in Java that builds and manipulates graph structures. Unlike the graphs you'd see in an excel sheet, these graph structures consist of nodes that hold values, and edges, similar to a line or an arrow, connect the nodes to each other. I then built two clients for the package: a <a class="special-link" href="https://www.gnu.org/software/make/" target="_blocked">GNU Make client</a> and a GPS client similar to Google Maps. The Make client uses the graph package to build targets in the correct order, and the GPS client finds the shortest path from node A to B in a graph of locations using the <a class="special-link" href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blocked">A* Search algorithm</a>. The A* Search algorithm is a graph traversal algorithm that uses weights to intelligently search for the least cost path from a starting node to an end node.</p>
+            <p class="body-text">For my data structures class, I implemented a library package in Java that builds and manipulates graph structures. Unlike the graphs you'd see in an Excel sheet, these graph structures consist of nodes that hold values, and edges, similar to a line or an arrow, that connect the nodes to each other. I then built two clients for the package: a <a class="special-link" href="https://www.gnu.org/software/make/" target="_blocked">GNU Make client</a> and a GPS client similar to Google Maps. The Make client uses the graph package to build targets (that represent software or files that need to be setup) in the correct order, and the GPS client finds the shortest path from node A to B in a graph of locations using the <a class="special-link" href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blocked">A* Search algorithm</a>. The A* Search algorithm is a graph traversal algorithm that uses weights to intelligently search for the least cost path from a starting node to an end node.</p>
             <h2>The Code</h2>
-            <p class="body-text">I implemented classes with the functionalities of the basic graph structures for the graph package. My package could read in input files that would determine how to build representations of graphs for both clients. For the GNU Make client, I implemented functionalities such that the client builds graphs that have connections between nodes to indicate the order in which the targets to be built. For the GPS client, the client uses the graph package to build graphs where locations in a map are nodes, and the connections between nodes are streets connecting the locations.  I implemented the A* Search algorithm so that it uses Manhattan distance heuristics to weight decisions on which edges or "streets" to traverse next when building the shortest path from starting node A to ending node B.</p>
+            <p class="body-text">I implemented classes with the functionalities of the basic graph structures for the graph package. My package can read input files that contain graph information for both clients. For the GNU Make client, I implemented functionalities such that the client builds graphs that have connections between nodes to indicate the order in which the targets need to be built. For the GPS client, the client uses the graph package to build graphs where locations in a map are nodes, and the connections between nodes are streets connecting the locations.  I implemented the A* Search algorithm so that it uses Euclidean distance heuristics to weight decisions on which edges or "streets" to traverse next when building the shortest path from starting node A to ending node B.</p>
             <h2>GNU Make Client Example</h2>
-            <div class="other-div"><img class="other-img" src="assets/img/make-dir.png"></div>
-            <p class="body-text">Above is the makefile directory that lists the file info for three example files, foo, foo.y, and foo.h. The line with 100 marks the time that the directy was last updated in Unix since the Epoch. The numbers next to files show the time the file was last updated. These numbers must be less than the time when the directory was last updated.</p>
-            <div class="other-div"><img class="other-img" src="assets/img/makefile.png"></div>
+            <div class="other-div"><img class="other-img" src="assets/img/make-dir.png" alt="makefile directory example"></div>
+            <p class="body-text">Above is the makefile directory that lists the file info for three example files: foo, foo.y, and foo.h. The line with 100 marks the time that the directory was last updated in Unix since the Epoch. The numbers next to files show the time the file was last updated. These numbers must be less than the time when the directory was last updated.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/makefile.png" alt="makefile exmaple with rules and dependencies example"></div>
             <p class="body-text">The makefile shown above gives all of the rules for each file. The file foo.o has dependencies on foo.c and foo.h in that order, so the files foo.c and foo.h must be built first before foo.o can be built. Once foo.o is ready to be built, its rule, "gcc -g -c foo.o foo.c," will be processed in the output. For this example, let's build the file foo. According to the makefile, foo has a dependecy on foo.o, which depends on foo.c and foo.h. Therefore, the order of dependencies to build file foo is foo.c, foo.h, and then foo.o.</p>
-            <div class="other-div"><img class="other-img" src="assets/img/make-output.png"></div>
-            <p class="body-text">The output file above shows that the first rule to complete was foo.c's rule "yacc -o foo.c foo.y", because foo.c's dependency foo.y didn't have any rules, so it was already built. Next is foo.o's rule, "gcc -g -c foo.o foo.c," because foo.c was taken care of and foo.h doesn't have any rules. Last is foo's rule, "gcc -o foo foo.o," because foo's dependencies have all been built. In the background, the client read in the input files and used the graph package to construct a directed graph that had connections between the files that depend on each other. The graph client traversed the graph to find the right order to build the dependencies based on the rules in the makefile.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/make-output.png" alt="gnu make client output example"></div>
+            <p class="body-text">The output file above shows that the first rule to complete was foo.c's rule "yacc -o foo.c foo.y", because foo.c's dependency foo.y doesn't have any rules and the directory shows that foo.y was already built at time 50. Next is foo.o's rule, "gcc -g -c foo.o foo.c," because foo.c was taken care of and foo.h doesn't have any rules and was already built at time 10. Last is foo's rule, "gcc -o foo foo.o," because foo's dependencies have all been built. In the background, the client read in the input files and used the graph package to construct a directed graph that had connections between the files that depend on each other. The graph client traversed the graph to find the right order to build the dependencies based on the rules in the makefile.</p>
             <h2>GPS Client Example</h2>
-            <div class="other-div"><img class="other-img" src="assets/img/gps-map.png"></div>
-            <p class="body-text">The above map lists all of the locations and roads in our example world. The lines that start with L are locations. There are three main cities, San Francisco, Berkeley, and Santa Cruz, and other less important cities like C1, C2, etc. The two numbers after each city name are the cities' coordinates. Lines that start with R are roads. The first road listed, University Ave., runs East to West between Berkeley and C1, and spans a distance of 0.3196. The GPS client will pass this map to the graph package so that the graph package can construct an undirected graph to represent the road system of the (flat) world. For this example, let's take a trip from San Francisco to Santa Crux to Berkeley! The GPS client will take in these three locations, and then run the A* search algorithm on the graph of the map to find the shortest driving path that goes to all of our destinations.</p>
-            <div class="other-div"><img class="other-img" src="assets/img/gps-output.png"></div>
+            <div class="other-div"><img class="other-img" src="assets/img/gps-map.png" alt="gps client map example"></div>
+            <p class="body-text">The above map lists all of the locations and roads in our example world. The lines that start with L are locations. There are three main cities, San Francisco, Berkeley, and Santa Cruz, and other less important cities like C1, C2, etc. The two numbers after each city name are the city's coordinates. Lines that start with R are roads. The first road listed, University Ave., runs East to West between Berkeley and C1, and spans a distance of 0.3196. The GPS client will pass this map to the graph package so that the graph package can construct a graph to represent the road system of the (flat) world. For this example, let's take a trip from San Francisco to Santa Cruz to Berkeley! The GPS client will take in these three locations, and then run the A* search algorithm on the graph of the map to find the shortest driving path that goes to all of our destinations.</p>
+            <div class="other-div"><img class="other-img" src="assets/img/gps-output.png" alt="gps client directions output example"></div>
             <p class="body-text">The output of the GPS client is shown above. The output gives the driving directions that will cover the shortest distance to reach our destination in Berkeley while also taking a detour to Santa Cruz.</p>
             <h2>Languages and Tools Used</h2>
             <div id="lang-tools-div">
-                <div class="lang-tools-img"><img class="other-img" src="assets/img/Java_programming_language_logo.svg"></div>
-                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png"></div>
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/Java_programming_language_logo.svg" alt="java logo"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png" alt="git logo"></div>
             </div>
 
             <div class="back-arrows">
                 <a href="index.html#projects"><div class="caption">
-                    <div id="back"><img id="back-img" src="assets/img/back.svg"></div>
+                    <div id="back"><img id="back-img" src="assets/img/back.svg" alt="back arrow"></div>
                     <h4>Back to Projects</h4>
                 </div></a>
                 <a href="graphs.html"><div class="caption-right">
-                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg"></div>
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg" alt="back to top arrow"></div>
                     <h4>Back to Top</h4>
                 </div></a>
             </div>
@@ -70,13 +70,13 @@
             <footer>
                 <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
                 <div id="footer-icons-div">
-                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg"></a>
-                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg"></a>
-                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg"></a>
-                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg"></a>
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg" alt="email icon"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg" alt="linkedin icon"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg" alt="github icon"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg" alt="instagram icon"></a>
                 </div>
             </footer>
 
-        <script src="assets/script/about-script.js"></script>
+        <script src="assets/script/general-script.js"></script>
         </body>
     </html>
