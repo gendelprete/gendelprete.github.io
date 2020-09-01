@@ -75,9 +75,6 @@
 
             <p class="body-text"><strong>Screen Space UV Coordinates</strong><br>I found out the hard way that .OBJ files do not have UV texture coordinates. This was a problem because my halftone shading in the "Hope" shader relies on UV coordinates to calculate the distance to the nearest point in a dot grid. In order to apply the "Hope" Shader to the Baby Yoda .OBJ model, I had to calculate UV coordinates using 3D screen space coordinates. I modified my vertex shader to include a varying variable, varying meaning a variable created in the vertex shader that's used in the fragment shader, that holds the screen space coordinates of a given vertex, which is just the vertex's model space coordinates transformed using the model view matrix and projection matrix. In the fragment shader, I divided the x and y components of the screen space position of a fragment by the w component, which is the homogeneous coordinate. The division by w is to ensure that the perspective of the model is not skewed when applying 2D texture coordinates, or in the case of a halftone shader, the grid of dots, in 3D.</p>
 
-            <h2>Lessons Learned</h2>
-            <p class="body-text">Over the course of the project, I learned how to use realistic mathematical equations for light to achieve non-photorealistic results. I learned multiple techniques for adding different illustrative effects and aesthetics to rendered images through GLSL shaders. Lastly, I learned a new technology, Three.js, which is a powerful real-time rendering tool for the web.</p>
-
             <h2>Results</h2>
             <p class="body-text"><strong>Toon/Cel Shader</strong><br></p>
             <div class="other-div"><img class="other-img" src="assets/img/toon-sphere.png" alt="Sphere colored with toon shading"></div>
@@ -148,7 +145,7 @@
                     <div id="back"><img id="back-img" src="assets/img/back.svg" alt="back arrow"></div>
                     <h4>Back to Projects</h4>
                 </div></a>
-                <a href="website.html"><div class="caption-right">
+                <a href="shaders.html"><div class="caption-right">
                     <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg" alt="back to top arrow"></div>
                     <h4>Back to Top</h4>
                 </div></a>
