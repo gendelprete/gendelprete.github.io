@@ -14,7 +14,7 @@ new TypeIt("#type-carousel", {
   loop: true,
   cursor: true
 })
-  .type("UC Berkeley student.")
+  .type("UC Berkeley alumni.")
   .pause(1500)
   .delete()
   .type("San Francisco native.")
