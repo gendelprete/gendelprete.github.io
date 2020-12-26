@@ -283,6 +283,8 @@ h1 {
   }
   #about-content-top {
     margin: 10px 0px 30px 0px;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 }
 
