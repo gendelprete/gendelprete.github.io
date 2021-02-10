@@ -23,7 +23,4 @@ new TypeIt("#type-carousel", {
   .type("twin.")
   .pause(1500)
   .delete()
-  .type("boba enthusiast.")
-  .pause(1500)
-  .delete()
   .go();
