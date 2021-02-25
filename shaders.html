@@ -40,6 +40,10 @@
                 <h1>GLSL NPR Toon Shaders<br>UC Berkeley - Summer 2020</h1>
             </div>
 
+            <div align="middle">
+                <p class="body-text"><strong><a class="special-link" href="shaders.html#results">Click Here to Jump to Results!</a></strong></p>
+            </div>
+
             <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://www.youtube.com/embed/Ms0PCI8oevc" width="100%" height="100%" style="position:absolute" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
 
             <h2>Overview</h2>
@@ -75,24 +79,24 @@
 
             <p class="body-text"><strong>Screen Space UV Coordinates</strong><br>I found out the hard way that .OBJ files do not have UV texture coordinates. This was a problem because my halftone shading in the "Hope" shader relies on UV coordinates to calculate the distance to the nearest point in a dot grid. In order to apply the "Hope" Shader to the Baby Yoda .OBJ model, I had to calculate UV coordinates using 3D screen space coordinates. I modified my vertex shader to include a varying variable, varying meaning a variable created in the vertex shader that's used in the fragment shader, that holds the screen space coordinates of a given vertex, which is just the vertex's model space coordinates transformed using the model view matrix and projection matrix. In the fragment shader, I divided the x and y components of the screen space position of a fragment by the w component, which is the homogeneous coordinate. The division by w is to ensure that the perspective of the model is not skewed when applying 2D texture coordinates, or in the case of a halftone shader, the grid of dots, in 3D.</p>
 
-            <h2>Results</h2>
+            <h2 id="results">Results</h2>
             <p class="body-text"><strong>Toon/Cel Shader</strong><br></p>
             <div class="other-div"><img class="other-img" src="assets/img/toon-sphere.png" alt="Sphere colored with toon shading"></div>
             <div class="other-div"><img class="other-img" src="assets/img/toon-yoda.png" alt="Baby Yoda colored with toon shading"></div>
             <div class="other-div"><img class="other-img" src="assets/img/toon-yoda2.png" alt="Baby Yoda colored with toon shading"></div>
-            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/kcmSv4uUVPvsSuJxaQ" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a class="special-link" href="https://giphy.com/gifs/shader-babyyoda-glsl-kcmSv4uUVPvsSuJxaQ">via GIPHY</a></p></div>
+            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/kcmSv4uUVPvsSuJxaQ" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p class="body-text"><a class="special-link" href="https://giphy.com/gifs/shader-babyyoda-glsl-kcmSv4uUVPvsSuJxaQ">via GIPHY</a></p></div>
 
             <p class="body-text"><strong>Noir Shader</strong><br></p>
             <div class="other-div"><img class="other-img" src="assets/img/noir-sphere.png" alt="Sphere colored with noir shading"></div>
             <div class="other-div"><img class="other-img" src="assets/img/noir-yoda.png" alt="Baby Yoda colored with noir shading"></div>
             <div class="other-div"><img class="other-img" src="assets/img/noir-yoda2.png" alt="Baby Yoda colored with noir shading"></div>
-            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/S8lLfJXPInQ8aDt2RH" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a class="special-link" href="https://giphy.com/gifs/shader-babyyoda-glsl-S8lLfJXPInQ8aDt2RH">via GIPHY</a></p></div>
+            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/S8lLfJXPInQ8aDt2RH" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p class="body-text"><a class="special-link" href="https://giphy.com/gifs/shader-babyyoda-glsl-S8lLfJXPInQ8aDt2RH">via GIPHY</a></p></div>
 
             <p class="body-text"><strong>"Hope" Shader</strong><br></p>
             <div class="other-div"><img class="other-img" src="assets/img/hope-sphere.png" alt="Sphere colored like the Obama Hope Poster"></div>
             <div class="other-div"><img class="other-img" src="assets/img/hope-yoda.png" alt="Baby Yoda colored like the Obama Hope Poster"></div>
             <div class="other-div"><img class="other-img" src="assets/img/hope-yoda2.png" alt="Baby Yoda colored like the Obama Hope Poster"></div>
-            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/JsJeUQ1aKUxRfG3vv5" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a class="special-link" href="https://giphy.com/gifs/starwars-babyyoda-glsl-JsJeUQ1aKUxRfG3vv5">via GIPHY</a></p></div>
+            <div class="other-div"><div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/JsJeUQ1aKUxRfG3vv5" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p class="body-text"><a class="special-link" href="https://giphy.com/gifs/starwars-babyyoda-glsl-JsJeUQ1aKUxRfG3vv5">via GIPHY</a></p></div>
 
             <h2>Theoretical References</h2>
             <p class="references">
