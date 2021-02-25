@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169937378-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-169937378-1');
+        </script>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/proj-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG" alt="gdp logo"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+
+            <div id="title">
+                <h1>Mesh Editor<br>UC Berkeley - Summer 2020</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/meshedit/task3-phong.png" alt="mesh of teapot"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">In this project, I implemented multiple algorithms to build and manipulate triangle meshes. Starting with bezier curves and surfaces, I used the de Casteljau algorithm to build the foundation of how to turn control points in the 2D plane into bezier curves. When the algorithm is used in two directions across a grid of n x n points, a bezier surface can be evaluated to build the structure of a mesh. I then used area weighted vertex normals to implement Phong shading, which is a type of shading that works better for smooth surfaces. By weighting the normals of the faces incident to a vertex by their area, the normal of the vertex can be influenced by the size of the faces around it. I then implemented the edge operations edge slip and edge split using the halfedge data structure in preparation for the loop subdivision algorithm. Edge flip and split modify the topography of an existing mesh by rearranging and adding elements to the mesh. Lastly, the loop subdivision algorithm allows for a mesh's triangles to be 4-1 subdivided so that the mesh becomes smoother and regularized. I used edge split and flip operations and position formulas in order to upsample the mesh and move vertices such that the mesh looks more regularized. My program can visualize triangle meshes and upsample them to make them look smoother!</p>
+
+            <h2>Section I: Bezier Curves and Surfaces</h2>
+
+            <h2>Part 1: Bezier curves with 1D de Casteljau subdivision</h2>
+            <p class="body-text">De Casteljau's algorithm is a recursive algorithm that evaluates bezier curves. The algorithm starts with a set of n + 1 control points, and then goes iteratively pairwise through the lines that connect these points to split the lines up into length t and (1 - t) sections using linear interpolation. The points where the lines are split are saved in a new list, and the algorithm will repeat the pairwise interpolation process on the new list. This process repeats n times until only one line is left and it's split into 2 parts of length t and (1 - t). The point where the line is split (the final point) is a point on the degree n bezier curve that the original control points defined.</p>
+            <p class="body-text">I implemented de Casteljau's algorithm by using a function that takes in a set of control points and iterates through the points in a for loop to perform the interpolation process. The for loop saves the new points in a vector and then returns the vector so that the function can be called again for the next level of evaluation.</p>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-og.png">
+              <p id="caption-text">Original control points.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-level1.png">
+              <p id="caption-text">Step 1</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-level2.png">
+              <p id="caption-text">Step 2</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-level3.png">
+              <p id="caption-text">Step 3</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-level4.png">
+              <p id="caption-text">Step 4</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-level5.png">
+              <p id="caption-text">Step 5</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task1-adjusted.png">
+              <p id="caption-text">Adjusted control points and different t value.</p>
+            </div>
+
+
+            <h2>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</h2>
+            <p class="body-text">The de Casteljau algorithm extends to surfaces by evaluating the bezier curves of a n x n 2D vector of control points with parameters (u, v) by first using the 1D de Casteljau algorithm for all of the n x 1 rows and parameter u, and then evaluating again on the bezier points that are returned from each row using parameter v. Basically, de Casteljau evaluation is used in one direction to get one point from each row's bezier curve evaluation, and then a final de Casteljau evaluation is done in the "column direction" using the points from the rows. The final evaluation in the other direction is what creates the bezier surface. </p>
+            <p class="body-text">I implemented bezier surfaces by first implementing a function that runs one level of the 1D de Casteljau algorithm using a for loop, linear interpolation on the lines of pairwise control points, and a parameter t. I then used this function to build a function that runs the complete 1D de Casteljau algorithm by recursively evaluating one level of control points, and then re-running the linear interpolation on the new points until a single point is returned that is on the bezier curve. I then ran this algorithm on all of the rows of a n x n 2D vector of points with parameter u, and then used the resulting points to evaluate the bezier curve in the other direction using parameter v to get a surface.</p>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task2-wf.png">
+              <p id="caption-text">Teapot with wireframe after bezier surface evaluation.</p>
+            </div>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task2-no-wf.png">
+              <p id="caption-text">Teapot without wireframe after bezier surface evaluation.</p>
+            </div>
+
+
+            <h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
+
+            <h2>Part 3: Area-weighted vertex normals</h2>
+            <p class="body-text">I implemented area-weighted vertex normals by first calculating the normals of all the faces incident to the given vertex which I'll call vertex a. Starting with the halfedge associated with the vertex a, I got b = halfedge->next()->vertex() and c = halfedge->next()->next()->vertex() to get the other vertices of the face associated with the halfedge. I calculated the normal of the face using the cross product of the vectors (b - a) and (c - a). I then multiplied the normal by the area of the face, which is 0.5 * the magnitude of the normal of the face (since the face is a triangle). I repeated this for all of the faces incident to the given vertex by traversing all edges around the vertex using halfedge->twin()->next(). Lastly, I summed up all of the area-weighted normals, and returned the normalized unit vector of the sum.</p>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task3-flat.png">
+              <p id="caption-text">Teapot shading without vertex normals (flat shading).</p>
+            </div>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task3-phong.png">
+              <p id="caption-text">Teapot shading with vertex normals (Phong shading).</p>
+            </div>
+
+            <h2>Part 4: Edge flip</h3>
+            <p class="body-text">To implement edge flip, I first checked the 2 faces on either side of the input edge to check if they're boundaries. If they aren't, I collected pointers to all of the halfedges, edges, vertices, and faces that are connected to the edge that needs to be flipped. I totaled 10 halfedges, 5 edges, 4 vertices, and 2 faces. I then reassigned all of the Iter pointers of the various mesh elements I had collected so that the input edge had flipped directions. The halfedges all needed to be updated using setNeighbor to have combinations of new vertices, edges, and/or next and twins, and I reset the halfedge pointers of vertices, edges, and faces to be sure that they point to valid, corresponding halfedges. I'd say my implementation is pretty straightforward/not very interesting for this part.</p>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task4-before.png">
+              <p id="caption-text">Cow before edge flips.</p>
+            </div>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/meshedit/task4-after.png">
+              <p id="caption-text">Cow after edge flips.</p>
+            </div>
+
+            <h2>Part 5: Edge split</h2>
+            <p class="body-text">I implemented edge split by collecting pointers to mesh elements, creating new mesh elements for the split, computing the position of the new vertex, and reassigning pointers. After checking to make sure the input edge isn't on a boundary, I first collected pointers to the 10 halfedges, 5 edges, 4 vertices, and 2 faces that are associated to the edge that will be split. I then created the new vertex m and computed its position by computing the midpoint between the vertices at the endpoints of the input edge. I then created the new mesh elements that included 6 halfedges, 3 edges, and 2 faces. Lastly, I reassigned the pointers for all of the halfedges' values using setNeighbors, and then set the halfedge pointers of the vertices, faces, and edges to point to their new values. My implementation followed the same structure as edge flip, except this time I added new mesh elements. I didn't really use any tricks except drawing things out before coding.</p>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task5-before.png">
+              <p id="caption-text">Cube before splits.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task5-after.png">
+              <p id="caption-text">Cube after splits</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task5-before2.png">
+              <p id="caption-text">Cube before combo of splits and flips.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task5-after2.png">
+              <p id="caption-text">Cube after combo of splits and flips.</p>
+            </div>
+
+            <p class="body-text">When I was debugging, I used the cube mesh to try out a bunch of different splits and flips. I had some problems where I would split an edge, and then a hole in the mesh would appear a few faces over from where I did the edge split. After trying to figure out where the holes came from, I looked back at the drawing I did to figure out how to move around pointers, and realized I had messed up the pattern for some of the halfedges' face reassignments. Debugging tricks-of-the-trade: Double checking what you just typed and drawing things out.</p>
+
+            <h2>Part 6: Loop subdivision for mesh upsampling</h2>
+            <p class="body-text">I implemented loop subdivision by computing new, weighted average positions for new and old vertices, subdividing the mesh using edge splits and flips, and updating all of the vertices' positions. To compute the weighted average positions of new vertices that would be created when an edge is split, I iterated through all of the edges in the mesh, collected the edge's four neighboring vertices, and used the 3/8 and 1/8 edge proportion formula to calculate where a new vertex would be inserted along the midpoint of an edge. I saved these calculations in Edge->newPosition. I then iterated over all of the vertices in the mesh to compute a weighted average using all the vertex's original incident neighbors, its degree, and the (1 - nu) * og position + u * sum of neighbor positions formula. I stored these calculations in Vertex->newPosition. After doing the calculations, I iterated through all of the edges again and performed edge splits. For every original edge that connects two old vertices, I split the edge using edgeSplit and used the returned pointer to the new midpoint vertex to set Vertex->newPosition = Edge->newPosition so that the new vertex could be updated to its weighted average position at the end of the loop subdivision process. I made sure that my edge split function only marked the two new edges that crossed a triangle and the new midpoint vertex as isNew = true so that no original mesh edges would be flipped later. After edge split, I performed edge flips on the new edges that had isNew set to true and connected a new vertex to an old vertex. After flipping an edge, I would set its isNew to false so that the edge would become part of the original mesh for the next level of upsampling. Lastly, I iterated through all of the old and new vertices and updated their Vertex->positions to Vertex->newPositions. After the update, I marked the vertices as isNew = false for the next round of upsampling.</p>
+            <p class="body-text">In order to debug, I had printf statements printing out the coordinates of the positions of vertices. I found that my positions were printing out as (0, 0, 0) because of a number type error with division.</p>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-torus.png">
+              <p id="caption-text">Original torus mesh with no extraordinary points (vertices with non 6 degree).</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-torus1.png">
+              <p id="caption-text">1 upsample</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-torus2.png">
+              <p id="caption-text">2 upsamples</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-torus3.png">
+              <p id="caption-text">3 upsamples.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-torus4.png">
+              <p id="caption-text">4 upsamples.</p>
+            </div>
+            <p class="body-text">When the torus mesh subdivides, it subdivides symmetrically and smoothly because all of the vertices have a degree of 6 in the orignal mesh. This means that there will not be any extraordinary points after upsampling. Extradorinary points lead to asymmetrical meshes and "sharper" artifacts that still remain in the mesh after upsampling since the extradorinary points only lead to C1 continuity. Pre-splitting edges around vertices that have non 6 degrees helps reduce the effect of asymmetry from sharp corners and edges.</p>
+
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube.png">
+              <p id="caption-text">Original cube mesh.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube1.png">
+              <p id="caption-text">1 upsample</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube2.png">
+              <p id="caption-text">2 upsamples</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube3.png">
+              <p id="caption-text">3 upsamples.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube4.png">
+              <p id="caption-text">4 upsamples.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-cube5.png">
+              <p id="caption-text">Another angle of asymmetry after fourth upsample</p>
+            </div>
+            <p class="body-text">When subdividing the original cube mesh, the sharp corners and edges soften along with the rest of the cube, but they still retain some of their "pointy" shape. This makes the cube look asymmetrical because the softened corners still stick out where there are extraordinary points.</p>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit.png">
+              <p id="caption-text">Original cube mesh but the edges across each face have been pre-split.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit1.png">
+              <p id="caption-text">1 upsample</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit2.png">
+              <p id="caption-text">2 upsamples</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit3.png">
+              <p id="caption-text">3 upsamples.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit4.png">
+              <p id="caption-text">4 upsamples.</p>
+            </div>
+            <div class="smaller">
+              <img class="other-img" src="assets/img/meshedit/task6-presplit5.png">
+              <p id="caption-text">Another angle after fourth upsample</p>
+            </div>
+            <p class="body-text">After pre-splitting the diagonal edges that cross that each face of the cube, the cube upsamples more symmetrically than before. This is because the cube starts out less triangulated than the original, and the corner vertices have higher degrees. When the corners that become extraordinary points during upsampling, the added edges will split in a way that reduces the sharpness.</p>
+
+
+            <h2>Languages and Tools Used</h2>
+            <div id="lang-tools-div" class="space">
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/C++-Logo.wine.png" alt="c++ logo"></div>
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/c-programming-icon.png" alt="c logo"></div>
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/HTML5_Logo.svg" alt="html logo"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png" alt="git logo"></div>
+            </div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg" alt="back arrow"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="meshedit.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg" alt="back to top arrow"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg" alt="email icon"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg" alt="linkedin logo"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg" alt="github icon"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg" alt="instagram logo"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/general-script.js"></script>
+        </body>
+    </html>
