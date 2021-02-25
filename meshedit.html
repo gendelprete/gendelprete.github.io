@@ -82,7 +82,7 @@
 
             <h2>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</h2>
             <p class="body-text">The de Casteljau algorithm extends to surfaces by evaluating the bezier curves of a n x n 2D vector of control points with parameters (u, v) by first using the 1D de Casteljau algorithm for all of the n x 1 rows and parameter u, and then evaluating again on the bezier points that are returned from each row using parameter v. Basically, de Casteljau evaluation is used in one direction to get one point from each row's bezier curve evaluation, and then a final de Casteljau evaluation is done in the "column direction" using the points from the rows. The final evaluation in the other direction is what creates the bezier surface. </p>
-            <p class="body-text">I implemented bezier surfaces by first implementing a function that runs one level of the 1D de Casteljau algorithm using a for loop, linear interpolation on the lines of pairwise control points, and a parameter t. I then used this function to build a function that runs the complete 1D de Casteljau algorithm by recursively evaluating one level of control points, and then re-running the linear interpolation on the new points until a single point is returned that is on the bezier curve. I then ran this algorithm on all of the rows of a n x n 2D vector of points with parameter u, and then used the resulting points to evaluate the bezier curve in the other direction using parameter v to get a surface.</p>
+            <p class="body-text"><br>I implemented bezier surfaces by first implementing a function that runs one level of the 1D de Casteljau algorithm using a for loop, linear interpolation on the lines of pairwise control points, and a parameter t. I then used this function to build a function that runs the complete 1D de Casteljau algorithm by recursively evaluating one level of control points, and then re-running the linear interpolation on the new points until a single point is returned that is on the bezier curve. I then ran this algorithm on all of the rows of a n x n 2D vector of points with parameter u, and then used the resulting points to evaluate the bezier curve in the other direction using parameter v to get a surface.</p>
             <div class="other-div">
               <img class="other-img" src="assets/img/meshedit/task2-wf.png">
               <p id="caption-text">Teapot with wireframe after bezier surface evaluation.</p>
@@ -107,7 +107,7 @@
             </div>
 
             <h2>Part 4: Edge flip</h3>
-            <p class="body-text">To implement edge flip, I first checked the 2 faces on either side of the input edge to check if they're boundaries. If they aren't, I collected pointers to all of the halfedges, edges, vertices, and faces that are connected to the edge that needs to be flipped. I totaled 10 halfedges, 5 edges, 4 vertices, and 2 faces. I then reassigned all of the Iter pointers of the various mesh elements I had collected so that the input edge had flipped directions. The halfedges all needed to be updated using setNeighbor to have combinations of new vertices, edges, and/or next and twins, and I reset the halfedge pointers of vertices, edges, and faces to be sure that they point to valid, corresponding halfedges. I'd say my implementation is pretty straightforward/not very interesting for this part.</p>
+            <p class="body-text">To implement edge flip, I first checked the 2 faces on either side of the input edge to check if they're boundaries. If they aren't, I collected pointers to all of the halfedges, edges, vertices, and faces that are connected to the edge that needs to be flipped. I totaled 10 halfedges, 5 edges, 4 vertices, and 2 faces. I then reassigned all of the Iter pointers of the various mesh elements I had collected so that the input edge had flipped directions. The halfedges all needed to be updated using setNeighbor to have combinations of new vertices, edges, and/or next and twins, and I reset the halfedge pointers of vertices, edges, and faces to be sure that they point to valid, corresponding halfedges.</p>
             <div class="other-div">
               <img class="other-img" src="assets/img/meshedit/task4-before.png">
               <p id="caption-text">Cow before edge flips.</p>
@@ -118,14 +118,14 @@
             </div>
 
             <h2>Part 5: Edge split</h2>
-            <p class="body-text">I implemented edge split by collecting pointers to mesh elements, creating new mesh elements for the split, computing the position of the new vertex, and reassigning pointers. After checking to make sure the input edge isn't on a boundary, I first collected pointers to the 10 halfedges, 5 edges, 4 vertices, and 2 faces that are associated to the edge that will be split. I then created the new vertex m and computed its position by computing the midpoint between the vertices at the endpoints of the input edge. I then created the new mesh elements that included 6 halfedges, 3 edges, and 2 faces. Lastly, I reassigned the pointers for all of the halfedges' values using setNeighbors, and then set the halfedge pointers of the vertices, faces, and edges to point to their new values. My implementation followed the same structure as edge flip, except this time I added new mesh elements. I didn't really use any tricks except drawing things out before coding.</p>
+            <p class="body-text">I implemented edge split by collecting pointers to mesh elements, creating new mesh elements for the split, computing the position of the new vertex, and reassigning pointers. After checking to make sure the input edge isn't on a boundary, I first collected pointers to the 10 halfedges, 5 edges, 4 vertices, and 2 faces that are associated to the edge that will be split. I then created the new vertex m and computed its position by computing the midpoint between the vertices at the endpoints of the input edge. I then created the new mesh elements that included 6 halfedges, 3 edges, and 2 faces. Lastly, I reassigned the pointers for all of the halfedges' values using setNeighbors, and then set the halfedge pointers of the vertices, faces, and edges to point to their new values. My implementation followed the same structure as edge flip, except this time I added new mesh elements.</p>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task5-before.png">
               <p id="caption-text">Cube before splits.</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task5-after.png">
-              <p id="caption-text">Cube after splits</p>
+              <p id="caption-text">Cube after splits.</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task5-before2.png">
@@ -140,7 +140,6 @@
 
             <h2>Part 6: Loop subdivision for mesh upsampling</h2>
             <p class="body-text">I implemented loop subdivision by computing new, weighted average positions for new and old vertices, subdividing the mesh using edge splits and flips, and updating all of the vertices' positions. To compute the weighted average positions of new vertices that would be created when an edge is split, I iterated through all of the edges in the mesh, collected the edge's four neighboring vertices, and used the 3/8 and 1/8 edge proportion formula to calculate where a new vertex would be inserted along the midpoint of an edge. I saved these calculations in Edge->newPosition. I then iterated over all of the vertices in the mesh to compute a weighted average using all the vertex's original incident neighbors, its degree, and the (1 - nu) * og position + u * sum of neighbor positions formula. I stored these calculations in Vertex->newPosition. After doing the calculations, I iterated through all of the edges again and performed edge splits. For every original edge that connects two old vertices, I split the edge using edgeSplit and used the returned pointer to the new midpoint vertex to set Vertex->newPosition = Edge->newPosition so that the new vertex could be updated to its weighted average position at the end of the loop subdivision process. I made sure that my edge split function only marked the two new edges that crossed a triangle and the new midpoint vertex as isNew = true so that no original mesh edges would be flipped later. After edge split, I performed edge flips on the new edges that had isNew set to true and connected a new vertex to an old vertex. After flipping an edge, I would set its isNew to false so that the edge would become part of the original mesh for the next level of upsampling. Lastly, I iterated through all of the old and new vertices and updated their Vertex->positions to Vertex->newPositions. After the update, I marked the vertices as isNew = false for the next round of upsampling.</p>
-            <p class="body-text">In order to debug, I had printf statements printing out the coordinates of the positions of vertices. I found that my positions were printing out as (0, 0, 0) because of a number type error with division.</p>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-torus.png">
               <p id="caption-text">Original torus mesh with no extraordinary points (vertices with non 6 degree).</p>
@@ -155,13 +154,13 @@
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-torus3.png">
-              <p id="caption-text">3 upsamples.</p>
+              <p id="caption-text">3 upsamples</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-torus4.png">
-              <p id="caption-text">4 upsamples.</p>
+              <p id="caption-text">4 upsamples</p>
             </div>
-            <p class="body-text">When the torus mesh subdivides, it subdivides symmetrically and smoothly because all of the vertices have a degree of 6 in the orignal mesh. This means that there will not be any extraordinary points after upsampling. Extradorinary points lead to asymmetrical meshes and "sharper" artifacts that still remain in the mesh after upsampling since the extradorinary points only lead to C1 continuity. Pre-splitting edges around vertices that have non 6 degrees helps reduce the effect of asymmetry from sharp corners and edges.</p>
+            <p class="body-text">When the torus mesh subdivides, it subdivides symmetrically and smoothly because all of the vertices have a degree of 6 in the orignal mesh. This means that there will not be any extraordinary points after upsampling. Extraordinary points lead to asymmetrical meshes and "sharper" artifacts that still remain in the mesh after upsampling since the extraordinary points only lead to C1 continuity. Pre-splitting edges around vertices that have non 6 degrees helps reduce the effect of asymmetry from sharp corners and edges.</p>
 
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-cube.png">
@@ -177,16 +176,17 @@
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-cube3.png">
-              <p id="caption-text">3 upsamples.</p>
+              <p id="caption-text">3 upsamples</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-cube4.png">
-              <p id="caption-text">4 upsamples.</p>
+              <p id="caption-text">4 upsamples</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-cube5.png">
-              <p id="caption-text">Another angle of asymmetry after fourth upsample</p>
+              <p id="caption-text">Another angle of asymmetry after fourth upsample.</p>
             </div>
+
             <p class="body-text">When subdividing the original cube mesh, the sharp corners and edges soften along with the rest of the cube, but they still retain some of their "pointy" shape. This makes the cube look asymmetrical because the softened corners still stick out where there are extraordinary points.</p>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-presplit.png">
@@ -202,15 +202,15 @@
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-presplit3.png">
-              <p id="caption-text">3 upsamples.</p>
+              <p id="caption-text">3 upsamples</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-presplit4.png">
-              <p id="caption-text">4 upsamples.</p>
+              <p id="caption-text">4 upsamples</p>
             </div>
             <div class="smaller">
               <img class="other-img" src="assets/img/meshedit/task6-presplit5.png">
-              <p id="caption-text">Another angle after fourth upsample</p>
+              <p id="caption-text">Another angle after fourth upsample.</p>
             </div>
             <p class="body-text">After pre-splitting the diagonal edges that cross that each face of the cube, the cube upsamples more symmetrically than before. This is because the cube starts out less triangulated than the original, and the corner vertices have higher degrees. When the corners that become extraordinary points during upsampling, the added edges will split in a way that reduces the sharpness.</p>
 
