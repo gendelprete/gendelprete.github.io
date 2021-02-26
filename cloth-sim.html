@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- Created By: Genevieve Del Prete -->
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169937378-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-169937378-1');
+        </script>
+        <title>Genevieve Del Prete</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/proj-style.css">
+        <link rel="icon" href="assets/img/bitmoji.png">
+    </head>
+    <body>
+        <div id="all-content">
+            <div id="header">
+                <div id="gdp-logo-div"><a href="index.html"><img id="gdp-logo" src="assets/img/gdp-logo.PNG" alt="gdp logo"></a></div>
+
+                <div id="nav-bar">
+                    <a href="index.html" id="curr-link" class="large-nav-button">Work</a>
+                    <a href="about.html" class="large-nav-button">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="large-nav-button">Resume</a>
+                </div>
+
+                <div id="small-screen-nav" class="hidden">
+                    <p id="three-bars">&#9776;</p>
+                    <a href="index.html" id="curr-link" class="small-nav-button hidden">Work</a>
+                    <a href="about.html" class="small-nav-button hidden">About</a>
+                    <a href="assets/Genevieve_Del_Prete_resume.pdf" target="_blocked" class="small-nav-button hidden">Resume</a>
+                </div>
+            </div>
+
+            <div id="title">
+                <h1>Cloth Simulator<br>UC Berkeley - Summer 2020</h1>
+            </div>
+
+            <div id="main-photo-div"><img id="main-photo-img" src="assets/img/clothsim/p5_mirror.png" alt="reflective cloth draped over sphere"></div>
+
+            <h2>Overview</h2>
+            <p class="body-text">The cloth simulation program can simulate realistic behavior of 3D cloths using various math equations. The cloths are built from 3D meshes of point masses that are held together by different kinds of springs. A combination of Newton's second law of motion (F=ma), verlet integration (to compute the positions, velocity, and acceleration of the point masses), and the force of the connected springs simulates the behavior of how the cloth reacts to external and internal forces. In addition, the program uses corrective functions to adjust the point masses' positions if they are going to collide with each or with another object so that the cloth doesn't go through itself or other objects. Lastly, the program uses different shaders to give the cloth realistic lighting based on the light source, viewing direction, and type of material of the cloth in the 3D scene.</p>
+
+            <h2>Part I: Masses and springs</h2>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p1_tilted.png">
+                <p id="caption-text">pinned2.json structure</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p1_close_up.png" >
+                <p id="caption-text">pinned2.json close up</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p1_only_shearing.png">
+                <p id="caption-text">pinned2.json with only shearing constraints</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p1_no_shearing.png">
+                <p id="caption-text">pinned2.json without shearing constraints</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p1_all_springs.png">
+                <p id="caption-text">pinned2.json all constraints</p>
+              </div>
+            </div>
+
+
+            <h2>Part 2: Simulation via numerical integration</h2>
+            <p class="body-text">The spring constant ks describes how stiff the springs that hold together the point masses of the cloth are. When ks is low, the cloth is very stretchy because the strings are not very stiff. The simulation shows that the low ks cloth has a deep sag in between the two pinned corners. The cloth with the high ks constant has very stiff springs, so the cloth doesn't sag as much between the pinned corners.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_default.png">
+                <p id="caption-text">pinned2.json default ks (5000 N/m)</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_lowks.png">
+                <p id="caption-text">pinned2.json with low ks (1000 N/m)</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_highks.png">
+                <p id="caption-text">pinned2.json with high ks (15000 N/m</p>
+              </div>
+            </div>
+
+            <p class="body-text">The density affects the mass of the point masses that make up the cloth. The low density cloth retains a lot of its square shape compared to the default cloth because the point masses weigh less and therefore don't pull as much on the springs when the cloth hangs from the two pins. The cloth with high density sags more, similar to the low ks cloth, because the point masses weigh more.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_default.png">
+                <p id="caption-text">pinned2.json default density (15 g/cm<sup>2</sup>)</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_lowden.png">
+                <p id="caption-text">pinned2.json with low density (1 g/cm<sup>2</sup>)</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_highden.png">
+                <p id="caption-text">pinned2.json with high density (30 g/cm<sup>2</sup>)</p>
+              </div>
+            </div>
+
+            <p class="body-text">The damping percentage simulates loss of energy due to friction, heat loss, etc. The simulation with the low damping percentage takes a long time to reach a resting state and ripples around a lot because the cloth retains more of its energy. The simulation with the high damping percentage slowly falls down to its resting state and doesn't ripple because the cloth loses energy very quickly.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_default.png">
+                <p id="caption-text">pinned2.json default damping (0.2)</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_lowdamp.png">
+                <p id="caption-text">pinned2.json with low damping (0.1) rippling around</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned2_highdamp.png">
+                <p id="caption-text">pinned2.json with high damping (0.5) mid descent</p>
+              </div>
+            </div>
+
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned4.png">
+                <p id="caption-text">pinned4.json final resting state using default params</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p2_pinned4_2.png">
+                <p id="caption-text">pinned4.json final resting state from another angle</p>
+              </div>
+            </div>
+
+            <h2>Part 3: Handling collisions with other objects</h2>
+            <p class="body-text">When the spring constant ks is low, the springs that hold together the point masses in the cloth are weak. Since there is not much force holding the point masses together, the cloth streches out and sags over the sphere kind of like melting ice cream on a cone. The default ks of 5000 adds stiffness to the cloth's springs and gives the cloth a more realistic drape over the sphere. The high ks of 50000 makes the cloth's springs very stiff, so the corners of the cloth stick up more because the springs connecting the corners of the cloth to the center have more force that holds the corners up.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p3_500.png">
+                <p id="caption-text">sphere.json final resting state with ks = 500</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p3_5000.png">
+                <p id="caption-text">sphere.json final resting state with ks = 5000</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p3_50000.png">
+                <p id="caption-text">sphere.json final resting state with ks = 50000</p>
+              </div>
+            </div>
+
+
+            <h2>Part 4: Handling self-collisions</h2>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_default1.png">
+                <p id="caption-text">initial self-collision with default params</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_default2.png">
+                <p id="caption-text">later self-collision with default params</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_default3.png">
+                <p id="caption-text">almost resting self-collision with default params</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_default4.png">
+                <p id="caption-text">final resting state with default params</p>
+              </div>
+            </div>
+
+            <p class="body-text">When the cloth has a low ks (500 N/m) and a low density (1 g/cm<sup>2</sup>), the springs in the cloth aren't very stiff and the point masses are light weight. The point masses don't pull as much on the springs, so the cloth looks relatively unchanged from the self collision with default cloth parameters. The cloth with low ks but a high density (50 g/cm<sup>2</sup>), looks very odd when it falls on itself because the point masses pull on the springs with a heavier mass than the default parameters. Since the springs aren't stiff, they stretch out easily so the cloth has a lot of ripples when it collides with itself and generally doesn't look very realistic.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_lowks_lowden.png">
+                <p id="caption-text">initial self-collision with low ks and low density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_lowks_lowden2.png">
+                <p id="caption-text">final resting state with low ks and low density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_lowks_highden.png">
+                <p id="caption-text">initial self-collision with low ks and high density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_lowks_highden2.png">
+                <p id="caption-text">final resting state with low ks and high density</p>
+              </div>
+            </div>
+
+            <p class="body-text">The cloth with a high ks (10000 N/m) and low density has bigger ripples than the default cloth when it falls on itself because the stiff springs want to retain the shape of the cloth, but the light point masses don't drag the cloth down to its resting state as quickly. The cloth with high ks and high density doesn't ripple as much as the default cloth because the stiff springs don't allow for as much movement between point masses.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_highks_lowden.png">
+                <p id="caption-text">initial self-collision with high ks and low density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_highks_lowden2.png">
+                <p id="caption-text">final resting state with high ks and low density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_highks_highden.png">
+                <p id="caption-text">initial self-collision with high ks and high density</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p4_highks_highden2.png">
+                <p id="caption-text">final resting state with high ks and high density</p>
+              </div>
+            </div>
+
+            <h2>Part 5: Shaders</h2>
+            <p class="body-text">A GLSL shader program is a faster way to run part of the graphics pipeline such that scenes can be rendered quicker than CPU raytracing but still have realistic lighting and shadows. Shader programs take in parameters like pixel positions, normals, and uv coordinates, and also light and camera positions and equation constants. A shader program consists of two parts: a vertex shader and a fragment shader. The vertex shader transforms the vertices of an image into different object spaces (like model, object, and world space), and outputs the updated parameters and positions of the vertex for the fragment shader. The fragment shader takes in the transformed parameters from the vertex shader after rasterization and other positions and parameters of the lighting and/or textures in the scene, and then computes the final color for a fragment (which is like a sample or a pixel).</p>
+
+            <p class="body-text"><br>The Blinn-Phong shading model combines three different perceptual lighting components to produce a rendered image that has realistic looking lighting. Blinn-Phong is computed at each pixel, and the final color of the pixel depends on three components: ambient lighting, diffuse reflection, and specular highlights. Ambient lighting is a default color that is added into the color to counteract overly dark shadows (often found in direct illumination). The ambient lighting doesn't depend on any angles, light sources, etc., so the ambient color is a constant. Diffuse reflection gives a surface a matte look because light is reflected evenly in all directions regardless of the angle of the camera/eye direction. The specular highlight component adds (usually) white highlights that are the reflections of a light source(s) on a surface. The intensity of the highlights depend on the camera/eye direction because the direction dictates how the light bounces off the surface and reflects across the half vector between the viewing direction and the light source direction.</p>
+            <div class="other-div">
+              <img class="other-img" src="assets/img/clothsim/phong.png">
+            </div>
+            <p class="body-text">The image above from lecture shows how the ambient, diffuse, and specular components are added together to create a realistic looking rendered image.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_phong_amb.png">
+                <p id="caption-text">Default cloth with ambient component of Blinn-Phong shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_phong_diff.png">
+                <p id="caption-text">Default cloth with diffuse component of Blinn-Phong shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_phong_spec.png">
+                <p id="caption-text">Default cloth with specular component of Blinn-Phong shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_phong.png">
+                <p id="caption-text">Default cloth with Blinn-Phong shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_texture.png">
+                <p id="caption-text">Default cloth with ocean texture shader</p>
+              </div>
+            </div>
+
+            <p class="body-text">Bump mapping gives the illusion of details on a surface by adjusting the normals of an object's fragments. This adjustment depends on a height map which measures the differences in changes to uv coordinates. The modified normal changes the perceived look of a surface by slightly tweaking some of the normals of the surface so the the object doesn't have one normal that spans the whole surface. Displacement sampling builds on bump mapping by also adjusting the positions of a fragment based on the normal and the height map. This adds an actual "displaced" position/bump to the coloring from the bump mapping (which was just an illusion).</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_bump_cloth.png">
+                <p id="caption-text">Cloth with bump shader, 100 normal, 0.03 height</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_bump_sphere.png">
+                <p id="caption-text">Sphere with bump shader, 100 normal, 0.03 height</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_disp.png">
+                <p id="caption-text">Cloth with displacement shader, 100 normal, 0.03 height</p>
+              </div>
+            </div>
+
+            <p class="body-text">When changing the coarseness of the sphere's mesh, the sphere with -o 16 -a 16 doesn't have a perfectly round look to it. Since it is coarser, the sphere has more visible flat planes that undermine the illusion of the bump mapping and the displacement of the sphere. The -o 128 -a 128 sphere is less coarse and has a smoother shape that actually looks spherical. The illusion of the bump mapping and the displacement look more realistic on the less coarse sphere because there are more fragments to sample and shade.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_16_bump.png">
+                <p id="caption-text">-o 16 -a 16 sphere with bump shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_16_disp.png">
+                <p id="caption-text">-o 16 -a 16 sphere with displacement shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_128_bump.png">
+                <p id="caption-text">-o 128 -a 128 sphere with bump shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_128_disp.png">
+                <p id="caption-text">-o 128 -a 128 sphere with displacement shader</p>
+              </div>
+            </div>
+
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_mirror.png">
+                <p id="caption-text">Cloth with mirror shader</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/clothsim/p5_mirror_sphere.png">
+                <p id="caption-text">Sphere with mirror shader</p>
+              </div>
+            </div>
+
+            <h2>Languages and Tools Used</h2>
+            <div id="lang-tools-div" class="space">
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/C++-Logo.wine.png" alt="c++ logo"></div>
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/c-programming-icon.png" alt="c logo"></div>
+                <div class="lang-tools-img-med"><img class="other-img" src="assets/img/HTML5_Logo.svg" alt="html logo"></div>
+                <div id="git-img"><img class="other-img" src="assets/img/Git-Logo-2Color.png" alt="git logo"></div>
+            </div>
+
+            <div class="back-arrows">
+                <a href="index.html#projects"><div class="caption">
+                    <div id="back"><img id="back-img" src="assets/img/back.svg" alt="back arrow"></div>
+                    <h4>Back to Projects</h4>
+                </div></a>
+                <a href="cloth-sim.html"><div class="caption-right">
+                    <div id="back-to-top"><img id="btp-svg" src="assets/img/back-to-top.svg" alt="back to top arrow"></div>
+                    <h4>Back to Top</h4>
+                </div></a>
+            </div>
+        </div>
+
+            <footer>
+                <p id="footer-text">Coded from scratch by Genevieve Del Prete.</p>
+                <div id="footer-icons-div">
+                    <a href="mailto:gendelprete@gmail.com" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_mail.svg" alt="email icon"></a>
+                    <a href="https://www.linkedin.com/in/gendelprete/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_linkedin.svg" alt="linkedin logo"></a>
+                    <a href="https://github.com/gendelprete" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_github.svg" alt="github icon"></a>
+                    <a href="https://www.instagram.com/gengen87_/" target="_blocked"><img class="footer-icon" src="assets/img/iconfinder_ig.svg" alt="instagram logo"></a>
+                </div>
+            </footer>
+
+        <script src="assets/script/general-script.js"></script>
+        </body>
+    </html>
