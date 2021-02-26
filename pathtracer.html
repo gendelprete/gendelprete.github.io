@@ -50,21 +50,23 @@
             <p class="body-text">The triangle intersection algorithm that I used is the Moller Trumbore algorithm. The algorithm uses the ray equation and barycentric coordinates to determine whether a ray intersects a triangle, and if it does, at what time t the intersection occurs. The algorithm's main equation is o + td = (1 - b<sub>1</sub> - b<sub>2</sub>)P0 + b<sub>1</sub>P2 + b<sub>2</sub>P2. The left hand side of the equal sign is the ray equation where o is the origin vector, t is the time, and d is the direction vector. P0, P1, and P2 are the coordinates of the vertices of the triangle, and b<sub>1</sub>, b<sub>2</sub>, and b<sub>0</sub> = 1 - b<sub>1</sub> - b<sub>2</sub> are the barycentric coordinates. To solve for the values [t b<sub>1</sub> b<sub>2</sub>], the various vertices and ray origin and direction are used in a series of cross products, dot products, subtraction, etc shown below.</p>
             <div class="other-div"><img class="other-img" src="assets/img/pathtracer1/moller.png"></div>
             <p class="body-text">After solving for the [t b<sub>1</sub> b<sub>2</sub>] values, if the time t is > 0 and is within the min and max t of the ray (to ensure this is a valid intersection), and the barycentric coordinates are all within [0, 1], then the t is the time of the ray intersecting the triangle. The surface normal of the point of intersection can be found using the normals of the vertices of the triangle and the barycentric coordinates, and this normal can be used for shading of the pixel that the ray goes through in the image.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/CBempty.png">
-              <p id="caption-text">Empty Cornell box with normal shading.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/CBspheres.png">
-              <p id="caption-text">Cornell box with spheres and normal shading.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/CBdragon.png">
-              <p id="caption-text">Cornell box with dragon and normal shading.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/CBlucy.png">
-              <p id="caption-text">Cornell box with Lucy and normal shading.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/CBempty.png">
+                <p id="caption-text">Empty Cornell box with normal shading.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/CBspheres.png">
+                <p id="caption-text">Cornell box with spheres and normal shading.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/CBdragon.png">
+                <p id="caption-text">Cornell box with dragon and normal shading.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/CBlucy.png">
+                <p id="caption-text">Cornell box with Lucy and normal shading.</p>
+              </div>
             </div>
 
             <h2>Part 2: Bounding Volume Hierarchy</h2>
@@ -76,22 +78,23 @@
             </div>
 
             <p class="body-text">I chose to split along the longest axis of the primitive centroid bounding box and group primitives into the left or right group based on their centroid's position on either side of the midpoint of the centroid bounding box's splitting axis. I originally chose the longest axis of the node's bounding box and used the midpoint as the split point, not using a centroid based bounding box, but I ran into problems where the split point would not be in the middle of the primitives. One group would get all the primitives, while the other would be empty very early on. I tried to fix this issue using quicksort on the group that got all the primitives and splitting the sorted vector in half, but I found that my quicksort would work for some large dae files, but not others. After inspecting the CBLucy.dae mesh, I realized that maybe the longest axis of the bounding box is the longest distance wise, but the actual spread of the centroids of the primitives may not be longest on this axis. I then switched to the centroid bounding box midpoint heuristic, and this fixed my problem of uneven splitting.</p>
-            <br><br>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part2-cow.png">
-              <p id="caption-text">cow.dae with normal shading</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part2-bunny.png">
-              <p id="caption-text">bunny.dae with normal shading</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part2-max.png">
-              <p id="caption-text">maxplanck.dae with normal shading</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part2-peter.png">
-              <p id="caption-text">peter.dae with normal shading</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part2-cow.png">
+                <p id="caption-text">cow.dae with normal shading</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part2-bunny.png">
+                <p id="caption-text">bunny.dae with normal shading</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part2-max.png">
+                <p id="caption-text">maxplanck.dae with normal shading</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part2-peter.png">
+                <p id="caption-text">peter.dae with normal shading</p>
+              </div>
             </div>
 
             <p class="body-text">The meshedit/cow.dae mesh took 32.0146s without BVH acceleration, but only took 0.1033s with BVH acceleration. The sky/bunny.dae took 253.2246s without BVH acceleration, but only took 0.1066s with BVH acceleration. The meshedit/maxplanck.dae took 358.7527s without BVH acceleration, but only took 0.1578s with BVH acceleration. The meshedit/peter.dae took 286.3262s without BVH acceleration, but only took 0.1410s with BVH acceleration. These four geometries of varying complexities are 6862x faster than the non-accelerated BVH when averaged together. This impressive acceleration is thanks to the BVH because large amounts of computation can be skipped when calculating ray intersections since a single ray will only intersect with a few primitives in a leaf of the BVH, and testing all of the primitives in the entire scene is a waste of time and energy.</p>
@@ -100,110 +103,122 @@
             <h2>Part 3: Direct Illumination</h2>
             <p class="body-text">The uniform hemisphere sampling version of the direct lighting function calculates irradiance at uniform sample angles of a hemisphere for pixels in an image. For each pixel, the uniform hemisphere samples are used as the directions of rays pointing from the pixel into the image's scene in world space. If this ray built from the sample intersects with a primitive in the scene, the reflection equation of the surface at the intersection (which multiples the bsdf of the surface, the radiance of the intersection object, and a cosine of the sample direction) weighted by 1 / 2 * PI (because of the uniform hemisphere) will be added to the estimate of the irradiance of the pixel. However, for most of these uniform samples, the radiance coming into the pixel from the uniform hemisphere sample direction is zero because the chance that the sample is coming from a light source is very small, and we only care about direct light. Uniform hemisphere sampling tends to be noisy because most samples don't have any incoming radiance, and therefore the irradiance going out of the pixel in the sample direction doesn't have any light.</p>
             <p class="body-text">The importance sampling version of the direct lighting function calculates irradiance at pixels in an image by directly sampling light sources. Directly sampling light sources reduces the noise in the output image because all of the sample rays that don't intersect anything when going from a pixel to the light source have non-zero radiance, and therefore will be in a direct light. Instead of choosing uniform samples, samples are taken on light sources using a pdf that weights the directions pointing at a light source heavily. Using this sample that will be more likely to have a non-zero radiance, the same reflection equation as hemisphere sampling is used to get an estimate of radiance.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part3-bunny-hem.png">
-              <p id="caption-text">CBbunny.dae rendered with uniform hemisphere sampling.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part3-bunny-imp.png">
-              <p id="caption-text">CBbunny.dae rendered with importance light sampling.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part3-sphere-hem.png">
-              <p id="caption-text">CBspheres_lambertian.dae rendered with uniform hemisphere sampling.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/part3-sphere-imp.png">
-              <p id="caption-text">CBspheres_lambertian.dae rendered with importance light sampling.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part3-bunny-hem.png">
+                <p id="caption-text">CBbunny.dae rendered with uniform hemisphere sampling.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part3-bunny-imp.png">
+                <p id="caption-text">CBbunny.dae rendered with importance light sampling.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part3-sphere-hem.png">
+                <p id="caption-text">CBspheres_lambertian.dae rendered with uniform hemisphere sampling.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/part3-sphere-imp.png">
+                <p id="caption-text">CBspheres_lambertian.dae rendered with importance light sampling.</p>
+              </div>
             </div>
 
             <p class="body-text">When there are more samples per area light (light rays), the soft shadows underneath the bunny become less noisy because more radiance samples that point at the light will be included and weighted heavily in the estimate of irradiance for the pixels that are on the ground close to the bunny.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_1_1.png">
-              <p id="caption-text">CBbunny.dae with 1 light ray.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_1_4.png">
-              <p id="caption-text">CBbunny.dae with 4 light rays.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_1_16.png">
-              <p id="caption-text">CBbunny.dae with 16 light rays.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_1_64.png">
-              <p id="caption-text">CBbunny.dae with 64 light rays.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_1_1.png">
+                <p id="caption-text">CBbunny.dae with 1 light ray.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_1_4.png">
+                <p id="caption-text">CBbunny.dae with 4 light rays.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_1_16.png">
+                <p id="caption-text">CBbunny.dae with 16 light rays.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_1_64.png">
+                <p id="caption-text">CBbunny.dae with 64 light rays.</p>
+              </div>
             </div>
 
-            <p class="body-text"><br>Overall, uniform hemisphere sampling is more noisy than importance sampling due to the greater chance than a sample ray will not point at a light source. If a sample ray doesn't point at a light source, then there is no radiance along the ray and therefore no irradiance at the pixel where the ray originated. When estimating direct light, importance sampling does a better job because the sample rays that are used for the estimation of irradiance actually point at the light and will have direct lighting to use for the irradiance unless that ray intersects with a primitive in the scene.</p>
+            <p class="body-text">Overall, uniform hemisphere sampling is more noisy than importance sampling due to the greater chance than a sample ray will not point at a light source. If a sample ray doesn't point at a light source, then there is no radiance along the ray and therefore no irradiance at the pixel where the ray originated. When estimating direct light, importance sampling does a better job because the sample rays that are used for the estimation of irradiance actually point at the light and will have direct lighting to use for the irradiance unless that ray intersects with a primitive in the scene.</p>
 
             <h2>Part 4: Global Illumination</h2>
             <p class="body-text">For my implementation of global illumination, I recursively follow rays from the camera into world space to track how light bounced around the scene and ended up at the camera. Using this technique, indirect light that has reflected off of non-light objects can show up in the rendered image in addition to the direct lighting from light sources. To begin the algorithm, I check which bounce the current ray is on. If it's zero, then there is no bounce and zero radiance is returned (which would only be pixels that are the light source). If the ray is on the first bounce, then the direct lighting one bounce function is called. If the ray is on a bounce > 1, then a new ray is built from the current point and given a sample direction using a pdf. This new ray is tracked in the world scene and its reflection equation is calculated as usual except that the at_least_one_bounce/indirect lighting function is called recursively in the reflection equation to get a value for the radiance L. The intersection point of the ray will become the next point to sample in the recursive call. Thus, the recursion tracks light through the scene by bouncing along with the ray and estimating radiance at each new surface the sample ray intersects and reflects off of. To stop the recursion, I use a coin flip of probability 0.65 for Russian Roulette termination and also a max ray depth to ensure there are no infinite loops or really long computation times. The estimations for the radiance calculation are normalized by the sample pdfs used and the 0.65 Russian Roulette probability so that later bounces are not weighted as heavily since they do not add as much information to the radiance calculation as earlier bounces.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/spheres_global.png">
-              <p id="caption-text">CBspheres_lambertian.dae rendered with global illumination, 1024 samples-per-pixel, 16 light rays-per-pixel, and max 5 bounces.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/spheres_global.png">
+                <p id="caption-text">CBspheres_lambertian.dae rendered with global illumination, 1024 samples-per-pixel, 16 light rays-per-pixel, and max 5 bounces.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_global.png">
+                <p id="caption-text">CBbunny.dae rendered with global illumination, 1024 samples-per-pixel, 16 light rays-per-pixel, and max 5 bounces.</p>
+              </div>
             </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_global.png">
-              <p id="caption-text">CBbunny.dae rendered with global illumination, 1024 samples-per-pixel, 16 light rays-per-pixel, and max 5 bounces.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_direct_only.png">
-              <p id="caption-text">CBbunny.dae with only direct lighting.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_indirect_only.png">
-              <p id="caption-text">CBbunny.dae with only indirect lighting.</p>
-            </div>
-
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_depth_0.png">
-              <p id="caption-text">CBbunny.dae with max ray depth of 0.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_depth_1.png">
-              <p id="caption-text">CBbunny.dae with max ray depth of 1.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_depth_2.png">
-              <p id="caption-text">CBbunny.dae with max ray depth of 2.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_depth_3.png">
-              <p id="caption-text">CBbunny.dae with max ray depth of 3.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_depth_100.png">
-              <p id="caption-text">CBbunny.dae with max ray depth of 100.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_direct_only.png">
+                <p id="caption-text">CBbunny.dae with only direct lighting.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_indirect_only.png">
+                <p id="caption-text">CBbunny.dae with only indirect lighting.</p>
+              </div>
             </div>
 
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_1.png">
-              <p id="caption-text">CBbunny.dae with 1 sample-per-pixel.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_depth_0.png">
+                <p id="caption-text">CBbunny.dae with max ray depth of 0.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_depth_1.png">
+                <p id="caption-text">CBbunny.dae with max ray depth of 1.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_depth_2.png">
+                <p id="caption-text">CBbunny.dae with max ray depth of 2.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_depth_3.png">
+                <p id="caption-text">CBbunny.dae with max ray depth of 3.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_depth_100.png">
+                <p id="caption-text">CBbunny.dae with max ray depth of 100.</p>
+              </div>
             </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_2.png">
-              <p id="caption-text">CBbunny.dae with 2 samples-per-pixel.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_4.png">
-              <p id="caption-text">CBbunny.dae with 4 sample-per-pixel.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_8.png">
-              <p id="caption-text">CBbunny.dae with 8 samples-per-pixel.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_16.png">
-              <p id="caption-text">CBbunny.dae with 16 samples-per-pixel.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_64.png">
-              <p id="caption-text">CBbunny.dae with 64 samples-per-pixel.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/pathtracer1/bunny_s_1024.png">
-              <p id="caption-text">CBbunny.dae with 1024 samples-per-pixel.</p>
+
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_1.png">
+                <p id="caption-text">CBbunny.dae with 1 sample-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_2.png">
+                <p id="caption-text">CBbunny.dae with 2 samples-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_4.png">
+                <p id="caption-text">CBbunny.dae with 4 sample-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_8.png">
+                <p id="caption-text">CBbunny.dae with 8 samples-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_16.png">
+                <p id="caption-text">CBbunny.dae with 16 samples-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_64.png">
+                <p id="caption-text">CBbunny.dae with 64 samples-per-pixel.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/pathtracer1/bunny_s_1024.png">
+                <p id="caption-text">CBbunny.dae with 1024 samples-per-pixel.</p>
+              </div>
             </div>
 
 

@@ -448,6 +448,21 @@ h2 {
   }
 }
 
+/* Multiphoto Divs */
+.photo-display {
+  margin: 10px 10px 10px 10px;
+}
+
+
+@media screen and (min-width: 600px) {
+  .photo-display {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
 /* Lang and Tools */
 #lang-tools-div {
   display: flex;
