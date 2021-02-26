@@ -50,33 +50,35 @@
             <h2>Part 1: Bezier curves with 1D de Casteljau subdivision</h2>
             <p class="body-text">De Casteljau's algorithm is a recursive algorithm that evaluates bezier curves. The algorithm starts with a set of n + 1 control points, and then goes iteratively pairwise through the lines that connect these points to split the lines up into length t and (1 - t) sections using linear interpolation. The points where the lines are split are saved in a new list, and the algorithm will repeat the pairwise interpolation process on the new list. This process repeats n times until only one line is left and it's split into 2 parts of length t and (1 - t). The point where the line is split (the final point) is a point on the degree n bezier curve that the original control points defined.</p>
             <p class="body-text">I implemented de Casteljau's algorithm by using a function that takes in a set of control points and iterates through the points in a for loop to perform the interpolation process. The for loop saves the new points in a vector and then returns the vector so that the function can be called again for the next level of evaluation.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-og.png">
-              <p id="caption-text">Original control points.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-level1.png">
-              <p id="caption-text">Step 1</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-level2.png">
-              <p id="caption-text">Step 2</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-level3.png">
-              <p id="caption-text">Step 3</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-level4.png">
-              <p id="caption-text">Step 4</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-level5.png">
-              <p id="caption-text">Step 5</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task1-adjusted.png">
-              <p id="caption-text">Adjusted control points and different t value.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-og.png">
+                <p id="caption-text">Original control points.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-level1.png">
+                <p id="caption-text">Step 1</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-level2.png">
+                <p id="caption-text">Step 2</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-level3.png">
+                <p id="caption-text">Step 3</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-level4.png">
+                <p id="caption-text">Step 4</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-level5.png">
+                <p id="caption-text">Step 5</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task1-adjusted.png">
+                <p id="caption-text">Adjusted control points and different t value.</p>
+              </div>
             </div>
 
 
@@ -119,98 +121,106 @@
 
             <h2>Part 5: Edge split</h2>
             <p class="body-text">I implemented edge split by collecting pointers to mesh elements, creating new mesh elements for the split, computing the position of the new vertex, and reassigning pointers. After checking to make sure the input edge isn't on a boundary, I first collected pointers to the 10 halfedges, 5 edges, 4 vertices, and 2 faces that are associated to the edge that will be split. I then created the new vertex m and computed its position by computing the midpoint between the vertices at the endpoints of the input edge. I then created the new mesh elements that included 6 halfedges, 3 edges, and 2 faces. Lastly, I reassigned the pointers for all of the halfedges' values using setNeighbors, and then set the halfedge pointers of the vertices, faces, and edges to point to their new values. My implementation followed the same structure as edge flip, except this time I added new mesh elements.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task5-before.png">
-              <p id="caption-text">Cube before splits.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task5-after.png">
-              <p id="caption-text">Cube after splits.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task5-before2.png">
-              <p id="caption-text">Cube before combo of splits and flips.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task5-after2.png">
-              <p id="caption-text">Cube after combo of splits and flips.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task5-before.png">
+                <p id="caption-text">Cube before splits.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task5-after.png">
+                <p id="caption-text">Cube after splits.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task5-before2.png">
+                <p id="caption-text">Cube before combo of splits and flips.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task5-after2.png">
+                <p id="caption-text">Cube after combo of splits and flips.</p>
+              </div>
             </div>
 
             <p class="body-text">When I was debugging, I used the cube mesh to try out a bunch of different splits and flips. I had some problems where I would split an edge, and then a hole in the mesh would appear a few faces over from where I did the edge split. After trying to figure out where the holes came from, I looked back at the drawing I did to figure out how to move around pointers, and realized I had messed up the pattern for some of the halfedges' face reassignments. Debugging tricks-of-the-trade: Double checking what you just typed and drawing things out.</p>
 
             <h2>Part 6: Loop subdivision for mesh upsampling</h2>
             <p class="body-text">I implemented loop subdivision by computing new, weighted average positions for new and old vertices, subdividing the mesh using edge splits and flips, and updating all of the vertices' positions. To compute the weighted average positions of new vertices that would be created when an edge is split, I iterated through all of the edges in the mesh, collected the edge's four neighboring vertices, and used the 3/8 and 1/8 edge proportion formula to calculate where a new vertex would be inserted along the midpoint of an edge. I saved these calculations in Edge->newPosition. I then iterated over all of the vertices in the mesh to compute a weighted average using all the vertex's original incident neighbors, its degree, and the (1 - nu) * og position + u * sum of neighbor positions formula. I stored these calculations in Vertex->newPosition. After doing the calculations, I iterated through all of the edges again and performed edge splits. For every original edge that connects two old vertices, I split the edge using edgeSplit and used the returned pointer to the new midpoint vertex to set Vertex->newPosition = Edge->newPosition so that the new vertex could be updated to its weighted average position at the end of the loop subdivision process. I made sure that my edge split function only marked the two new edges that crossed a triangle and the new midpoint vertex as isNew = true so that no original mesh edges would be flipped later. After edge split, I performed edge flips on the new edges that had isNew set to true and connected a new vertex to an old vertex. After flipping an edge, I would set its isNew to false so that the edge would become part of the original mesh for the next level of upsampling. Lastly, I iterated through all of the old and new vertices and updated their Vertex->positions to Vertex->newPositions. After the update, I marked the vertices as isNew = false for the next round of upsampling.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-torus.png">
-              <p id="caption-text">Original torus mesh with no extraordinary points (vertices with non 6 degree).</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-torus1.png">
-              <p id="caption-text">1 upsample</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-torus2.png">
-              <p id="caption-text">2 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-torus3.png">
-              <p id="caption-text">3 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-torus4.png">
-              <p id="caption-text">4 upsamples</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-torus.png">
+                <p id="caption-text">Original torus mesh with no extraordinary points (vertices with non 6 degree).</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-torus1.png">
+                <p id="caption-text">1 upsample</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-torus2.png">
+                <p id="caption-text">2 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-torus3.png">
+                <p id="caption-text">3 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-torus4.png">
+                <p id="caption-text">4 upsamples</p>
+              </div>
             </div>
             <p class="body-text">When the torus mesh subdivides, it subdivides symmetrically and smoothly because all of the vertices have a degree of 6 in the orignal mesh. This means that there will not be any extraordinary points after upsampling. Extraordinary points lead to asymmetrical meshes and "sharper" artifacts that still remain in the mesh after upsampling since the extraordinary points only lead to C1 continuity. Pre-splitting edges around vertices that have non 6 degrees helps reduce the effect of asymmetry from sharp corners and edges.</p>
 
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube.png">
-              <p id="caption-text">Original cube mesh.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube1.png">
-              <p id="caption-text">1 upsample</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube2.png">
-              <p id="caption-text">2 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube3.png">
-              <p id="caption-text">3 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube4.png">
-              <p id="caption-text">4 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-cube5.png">
-              <p id="caption-text">Another angle of asymmetry after fourth upsample.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube.png">
+                <p id="caption-text">Original cube mesh.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube1.png">
+                <p id="caption-text">1 upsample</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube2.png">
+                <p id="caption-text">2 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube3.png">
+                <p id="caption-text">3 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube4.png">
+                <p id="caption-text">4 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-cube5.png">
+                <p id="caption-text">Another angle of asymmetry after fourth upsample.</p>
+              </div>
             </div>
 
             <p class="body-text">When subdividing the original cube mesh, the sharp corners and edges soften along with the rest of the cube, but they still retain some of their "pointy" shape. This makes the cube look asymmetrical because the softened corners still stick out where there are extraordinary points.</p>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit.png">
-              <p id="caption-text">Original cube mesh but the edges across each face have been pre-split.</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit1.png">
-              <p id="caption-text">1 upsample</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit2.png">
-              <p id="caption-text">2 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit3.png">
-              <p id="caption-text">3 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit4.png">
-              <p id="caption-text">4 upsamples</p>
-            </div>
-            <div class="smaller">
-              <img class="other-img" src="assets/img/meshedit/task6-presplit5.png">
-              <p id="caption-text">Another angle after fourth upsample.</p>
+            <div class="photo-display">
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit.png">
+                <p id="caption-text">Original cube mesh but the edges across each face have been pre-split.</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit1.png">
+                <p id="caption-text">1 upsample</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit2.png">
+                <p id="caption-text">2 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit3.png">
+                <p id="caption-text">3 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit4.png">
+                <p id="caption-text">4 upsamples</p>
+              </div>
+              <div class="smaller">
+                <img class="other-img" src="assets/img/meshedit/task6-presplit5.png">
+                <p id="caption-text">Another angle after fourth upsample.</p>
+              </div>
             </div>
             <p class="body-text">After pre-splitting the diagonal edges that cross that each face of the cube, the cube upsamples more symmetrically than before. This is because the cube starts out less triangulated than the original, and the corner vertices have higher degrees. When the corners that become extraordinary points during upsampling, the added edges will split in a way that reduces the sharpness.</p>
 
