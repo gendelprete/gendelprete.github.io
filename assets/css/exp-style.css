@@ -347,7 +347,6 @@ h2 {
   line-height: 2;
   color: #444444;
   text-align: center;
-  margin-left: 50px;
   margin-block-end: 0em;
 }
 
@@ -398,9 +397,29 @@ h2 {
   }
 }
 
+/* Main Photo */
+#main-photo-div {
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+#main-photo-img {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 600px) {
+  #main-photo-div {
+    width: 80vw;
+    margin: auto;
+    margin-bottom: 50px;
+  }
+}
+
 /* Other Highlights */
 .highlight-div {
-  max-width: 650px;
+  max-width: 600px;
   margin: auto;
 }
 
